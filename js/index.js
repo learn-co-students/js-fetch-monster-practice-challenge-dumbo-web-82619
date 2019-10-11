@@ -1,3 +1,4 @@
+//Global Variable Declarations & Document Body Element Creations
 let monsterContainer = document.querySelector('#monster-container')
 const createMonster = document.querySelector('#create-monster')
 
@@ -29,13 +30,17 @@ const backBtn = document.querySelector('#back')
 const forwardBtn = document.querySelector('#forward')
 
 const button = document.querySelector('button')
+///////////////////////////////////////////////////////////////////
+
+//Add Event Listener to form button////////////////////////////////
 button.addEventListener('click', evt => {
     evt.preventDefault()
     let form = evt.target.parentElement
     let monsterName = form.name.value
     let monsterAge = form.age.value
     let monsterBio = form.description.value
-    
+
+    //POST fetch to create a new monster/////////
     fetch('http://localhost:3000/monsters', {
         method: 'POST',
         headers: {
@@ -52,10 +57,12 @@ button.addEventListener('click', evt => {
     .then(createMonsterCard)
 })
 
+//Display current API data on the DOM//////////////////////////////////////
 fetch(`http://localhost:3000/monsters/?_limit=${pageLimit}&_page=${currentPage}`)
 .then(resp => resp.json())
 .then(respJSON => respJSON.forEach(createMonsterCard))
 
+//Created function for displaying API data/////////////////////////////////
 function createMonsterCard(obj){
     let monsterContainer = document.querySelector('#monster-container')
 
@@ -71,6 +78,7 @@ function createMonsterCard(obj){
     monsterContainer.append(h2, h4, p)
 }
 
+//Add Event Listener to Back button/////////////////////////////////////
 backBtn.addEventListener('click', evt => {
     let monsterContainer = document.querySelector('#monster-container')
     let newContainer = document.createElement('div')
@@ -78,6 +86,7 @@ backBtn.addEventListener('click', evt => {
     newContainer.id = 'monster-container'
     monsterContainer.parentNode.replaceChild(newContainer, monsterContainer)
     
+    //Conditional for the current display page of the API//////////
     if (currentPage > 1){
         currentPage -= 1
     }
@@ -85,11 +94,13 @@ backBtn.addEventListener('click', evt => {
         currentPage
     }
 
+    //Fetch new display page//////////////////////////////////////
     fetch(`http://localhost:3000/monsters/?_limit=${pageLimit}&_page=${currentPage}`)
         .then(resp => resp.json())
         .then(respJSON => respJSON.forEach(createMonsterCard))
 })
 
+//Add Event Listener to Forward Button///////////////////////////////
 forwardBtn.addEventListener('click', evt => {
     let monsterContainer = document.querySelector('#monster-container')
     let newContainer = document.createElement('div')
@@ -99,6 +110,7 @@ forwardBtn.addEventListener('click', evt => {
 
     currentPage += 1
 
+    //Fetch new display page//////////////////////////////////////
     fetch(`http://localhost:3000/monsters/?_limit=${pageLimit}&_page=${currentPage}`)
         .then(resp => resp.json())
         .then(respJSON => {
@@ -106,6 +118,7 @@ forwardBtn.addEventListener('click', evt => {
             console.log(respJSON.length)
             if (respJSON.length < 1){
                 currentPage -= 1
+                //Added conditional to stay on the current display page//////
                 fetch(`http://localhost:3000/monsters/?_limit=${pageLimit}&_page=${currentPage}`)
                     .then(resp => resp.json())
                     .then(respJSON => {
@@ -115,6 +128,7 @@ forwardBtn.addEventListener('click', evt => {
                 })
             }
             else {
+                //Continues on to display new display page if conditional is not met////////
                 respJSON.forEach(obj => {
                     createMonsterCard(obj)
                 })
