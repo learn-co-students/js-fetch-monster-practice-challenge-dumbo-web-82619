@@ -1,7 +1,8 @@
 let monsterContainer = document.querySelector('#monster-container')
 const createMonster = document.querySelector('#create-monster')
+
 let currentPage = 1
-let pageLimit = 1000
+let pageLimit = 50
 
 const monsterForm = document.createElement('form')
 
