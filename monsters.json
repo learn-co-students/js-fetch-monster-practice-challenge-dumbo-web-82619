@@ -6005,6 +6005,24 @@
       "age": 13,
       "description": "131313",
       "id": 1001
+    },
+    {
+      "name": "Buster",
+      "age": "34",
+      "description": "Captain Hook!",
+      "id": 1002
+    },
+    {
+      "name": "The Host",
+      "age": "2000",
+      "description": "Parasite-Man that lurks the sewers.",
+      "id": 1003
+    },
+    {
+      "name": "Hurrangranger",
+      "age": "100000",
+      "description": "Hides in plain sight. Preys on those alone.",
+      "id": 1004
     }
   ]
 }
